@@ -1,0 +1,2457 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Queues</title>
+    <style>
+        /* Add CSS styles for code formatting and page layout */
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="content">
+        <h1>Queues</h1>
+        <section id="1">
+            <h2>1. Implement the Operations of Simple Queue in an Integer Array (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int MAX_QUEUE_SIZE = 10;
+                    int queue[10];
+                    int front = -1;
+                    int rear = -1;
+                    
+                    // Function to check if the queue is empty
+                    int isEmpty() {
+                        return front == -1;
+                    }
+                    
+                    // Function to check if the queue is full
+                    int isFull() {
+                        return (rear == MAX_QUEUE_SIZE - 1) && (front == 0) || (rear == front - 1);
+                    }
+                    
+                    // Function to insert an element into the queue
+                    void insert(int item) {
+                        if (isFull()) {
+                            printf("Queue is full. Cannot insert.\n");
+                        } else {
+                            if (front == -1) {
+                                front = rear = 0;
+                            } else if (rear == MAX_QUEUE_SIZE - 1) {
+                                rear = 0;
+                            } else {
+                                rear++;
+                            }
+                            queue[rear] = item;
+                            printf("Inserted: %d\n", item);
+                        }
+                    }
+                    
+                    // Function to delete an element from the queue
+                    int delete() {
+                        int item;
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot delete.\n");
+                            return -1;
+                        } else {
+                            item = queue[front];
+                            if (front == rear) {
+                                front = rear = -1;
+                            } else if (front == MAX_QUEUE_SIZE - 1) {
+                                front = 0;
+                            } else {
+                                front++;
+                            }
+                            return item;
+                        }
+                    }
+                    
+                    // Function to peek at the front element of the queue
+                    int peek() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot peek.\n");
+                            return -1;
+                        } else {
+                            return queue[front];
+                        }
+                    }
+                    
+                    int main() {
+                        int choice, item;
+                    
+                        while (1) {
+                            printf("\nQueue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Is Full\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter element to insert: ");
+                                    scanf("%d", &item);
+                                    insert(item);
+                                    break;
+                                case 2:
+                                    item = delete();
+                                    if (item != -1) {
+                                        printf("Deleted: %d\n", item);
+                                    }
+                                    break;
+                                case 3:
+                                    item = peek();
+                                    if (item != -1) {
+                                        printf("Front element: %d\n", item);
+                                    }
+                                    break;
+                                case 4:
+                                    printf(isEmpty() ? "Queue is empty.\n" : "Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    printf(isFull() ? "Queue is full.\n" : "Queue is not full.\n");
+                                    break;
+                                case 6:
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 2
+                Inserted: 2
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 6
+                Inserted: 6
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 3
+                Front element: 2
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 6
+                
+            </code></pre>
+        </section>
+        <section id="2">
+            <h2>2. Implement the Operations of Simple Queue in an String Array (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    
+                    int MAX_QUEUE_SIZE = 10;
+                    char queue[10][50]; // Assuming a maximum string length of 49 characters
+                    int front = -1;
+                    int rear = -1;
+                    
+                    // Function to check if the queue is empty
+                    int isEmpty() {
+                        return front == -1;
+                    }
+                    
+                    // Function to check if the queue is full
+                    int isFull() {
+                        return (rear == MAX_QUEUE_SIZE - 1) && (front == 0) || (rear == front - 1);
+                    }
+                    
+                    // Function to insert a string into the queue
+                    void insert(const char* item) {
+                        if (isFull()) {
+                            printf("Queue is full. Cannot insert.\n");
+                        } else {
+                            if (front == -1) {
+                                front = rear = 0;
+                            } else if (rear == MAX_QUEUE_SIZE - 1) {
+                                rear = 0;
+                            } else {
+                                rear++;
+                            }
+                            strcpy(queue[rear], item);
+                            printf("Inserted: %s\n", item);
+                        }
+                    }
+                    
+                    // Function to delete a string from the queue
+                    void delete() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot delete.\n");
+                        } else {
+                            printf("Deleted: %s\n", queue[front]);
+                            if (front == rear) {
+                                front = rear = -1;
+                            } else if (front == MAX_QUEUE_SIZE - 1) {
+                                front = 0;
+                            } else {
+                                front++;
+                            }
+                        }
+                    }
+                    
+                    // Function to peek at the front element of the queue
+                    void peek() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot peek.\n");
+                        } else {
+                            printf("Front element: %s\n", queue[front]);
+                        }
+                    }
+                    
+                    int main() {
+                        int choice;
+                        char item[50];
+                    
+                        while (1) {
+                            printf("\nQueue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Is Full\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter string to insert: ");
+                                    scanf("%s", item);
+                                    insert(item);
+                                    break;
+                                case 2:
+                                    delete();
+                                    break;
+                                case 3:
+                                    peek();
+                                    break;
+                                case 4:
+                                    printf(isEmpty() ? "Queue is empty.\n" : "Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    printf(isFull() ? "Queue is full.\n" : "Queue is not full.\n");
+                                    break;
+                                case 6:
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter string to insert: 6
+                Inserted: 6
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter string to insert: 5
+                Inserted: 5
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 2
+                Deleted: 6
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 3
+                Front element: 5
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 6
+                
+            </code></pre>
+        </section>
+        <section id="3">
+            <h2>3.  Implement the Operations of Queue Dynamically of Integers (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Structure for a queue node
+                    struct QueueNode {
+                        int data;
+                        struct QueueNode* next;
+                    };
+                    
+                    // Structure for a dynamic queue
+                    struct DynamicQueue {
+                        struct QueueNode* front;
+                        struct QueueNode* rear;
+                    };
+                    
+                    // Function to create a new queue
+                    struct DynamicQueue* createQueue() {
+                        struct DynamicQueue* queue = (struct DynamicQueue*)malloc(sizeof(struct DynamicQueue));
+                        if (queue == NULL) {
+                            printf("Memory allocation error. Cannot create the queue.\n");
+                            exit(1);
+                        }
+                        queue->front = queue->rear = NULL;
+                        return queue;
+                    }
+                    
+                    // Function to check if the queue is empty
+                    int isEmpty(struct DynamicQueue* queue) {
+                        return queue->front == NULL;
+                    }
+                    
+                    // Function to insert an element into the queue
+                    void insert(struct DynamicQueue* queue, int item) {
+                        struct QueueNode* newNode = (struct QueueNode*)malloc(sizeof(struct QueueNode));
+                        if (newNode == NULL) {
+                            printf("Memory allocation error. Cannot insert the element.\n");
+                            exit(1);
+                        }
+                        newNode->data = item;
+                        newNode->next = NULL;
+                        if (isEmpty(queue)) {
+                            queue->front = queue->rear = newNode;
+                        } else {
+                            queue->rear->next = newNode;
+                            queue->rear = newNode;
+                        }
+                        printf("Inserted: %d\n", item);
+                    }
+                    
+                    // Function to delete an element from the queue
+                    int delete(struct DynamicQueue* queue) {
+                        if (isEmpty(queue)) {
+                            printf("Queue is empty. Cannot delete.\n");
+                            return -1;
+                        }
+                        struct QueueNode* temp = queue->front;
+                        int item = temp->data;
+                        queue->front = temp->next;
+                        free(temp);
+                        return item;
+                    }
+                    
+                    // Function to peek at the front element of the queue
+                    int peek(struct DynamicQueue* queue) {
+                        if (isEmpty(queue)) {
+                            printf("Queue is empty. Cannot peek.\n");
+                            return -1;
+                        }
+                        return queue->front->data;
+                    }
+                    
+                    int main() {
+                        struct DynamicQueue* queue = createQueue();
+                        int choice, item;
+                    
+                        while (1) {
+                            printf("\nQueue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter element to insert: ");
+                                    scanf("%d", &item);
+                                    insert(queue, item);
+                                    break;
+                                case 2:
+                                    item = delete(queue);
+                                    if (item != -1) {
+                                        printf("Deleted: %d\n", item);
+                                    }
+                                    break;
+                                case 3:
+                                    item = peek(queue);
+                                    if (item != -1) {
+                                        printf("Front element: %d\n", item);
+                                    }
+                                    break;
+                                case 4:
+                                    printf(isEmpty(queue) ? "Queue is empty.\n" : "Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Exit
+                Enter your choice: 1
+                Enter element to insert: 6
+                Inserted: 6
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Exit
+                Enter your choice: 1
+                Enter element to insert: 8
+                Inserted: 8
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Exit
+                Enter your choice: 3
+                Front element: 6
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Exit
+                Enter your choice: 4
+                
+                
+            </code></pre>
+        </section>
+        <section id="4">
+            <h2>4.  Implement the Operations of Queue Dynamically of String (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    #include <string.h>
+                    
+                    // Structure for a queue node
+                    struct QueueNode {
+                        char data[50]; // Assuming a maximum string length of 49 characters
+                        struct QueueNode* next;
+                    };
+                    
+                    // Structure for a dynamic queue
+                    struct DynamicQueue {
+                        struct QueueNode* front;
+                        struct QueueNode* rear;
+                    };
+                    
+                    // Function to create a new queue
+                    struct DynamicQueue* createQueue() {
+                        struct DynamicQueue* queue = (struct DynamicQueue*)malloc(sizeof(struct DynamicQueue));
+                        if (queue == NULL) {
+                            printf("Memory allocation error. Cannot create the queue.\n");
+                            exit(1);
+                        }
+                        queue->front = queue->rear = NULL;
+                        return queue;
+                    }
+                    
+                    // Function to check if the queue is empty
+                    int isEmpty(struct DynamicQueue* queue) {
+                        return queue->front == NULL;
+                    }
+                    
+                    // Function to insert a string into the queue
+                    void insert(struct DynamicQueue* queue, const char* item) {
+                        struct QueueNode* newNode = (struct QueueNode*)malloc(sizeof(struct QueueNode));
+                        if (newNode == NULL) {
+                            printf("Memory allocation error. Cannot insert the element.\n");
+                            exit(1);
+                        }
+                        strncpy(newNode->data, item, 49); // Ensure the string is null-terminated
+                        newNode->next = NULL;
+                        if (isEmpty(queue)) {
+                            queue->front = queue->rear = newNode;
+                        } else {
+                            queue->rear->next = newNode;
+                            queue->rear = newNode;
+                        }
+                        printf("Inserted: %s\n", item);
+                    }
+                    
+                    // Function to delete a string from the queue
+                    char* delete(struct DynamicQueue* queue) {
+                        if (isEmpty(queue)) {
+                            printf("Queue is empty. Cannot delete.\n");
+                            return NULL;
+                        }
+                        struct QueueNode* temp = queue->front;
+                        char* item = (char*)malloc(strlen(temp->data) + 1); // +1 for null-terminator
+                        if (item == NULL) {
+                            printf("Memory allocation error. Cannot delete the element.\n");
+                            exit(1);
+                        }
+                        strcpy(item, temp->data);
+                        queue->front = temp->next;
+                        free(temp);
+                        return item;
+                    }
+                    
+                    // Function to peek at the front element of the queue
+                    char* peek(struct DynamicQueue* queue) {
+                        if (isEmpty(queue)) {
+                            printf("Queue is empty. Cannot peek.\n");
+                            return NULL;
+                        }
+                        char* item = (char*)malloc(strlen(queue->front->data) + 1); // +1 for null-terminator
+                        if (item == NULL) {
+                            printf("Memory allocation error. Cannot peek the element.\n");
+                            exit(1);
+                        }
+                        strcpy(item, queue->front->data);
+                        return item;
+                    }
+                    
+                    int main() {
+                        struct DynamicQueue* queue = createQueue();
+                        int choice;
+                        char item[50];
+                    
+                        while (1) {
+                            printf("\nQueue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter string to insert: ");
+                                    scanf("%s", item);
+                                    insert(queue, item);
+                                    break;
+                                case 2:
+                                    char* deletedItem = delete(queue);
+                                    if (deletedItem != NULL) {
+                                        printf("Deleted: %s\n", deletedItem);
+                                        free(deletedItem);
+                                    }
+                                    break;
+                                case 3:
+                                    char* peekedItem = peek(queue);
+                                    if (peekedItem != NULL) {
+                                        printf("Front element: %s\n", peekedItem);
+                                        free(peekedItem);
+                                    }
+                                    break;
+                                case 4:
+                                    printf(isEmpty(queue) ? "Queue is empty.\n" : "Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Exit
+                Enter your choice: 1
+                Enter string to insert: K
+                Inserted: K
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Exit
+                Enter your choice: 1
+                Enter string to insert: J
+                Inserted: J
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Exit
+                Enter your choice: 3
+                Front element: K
+                
+                Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Exit
+                Enter your choice: 5
+                
+            </code></pre>
+        </section>
+        <section id="5">
+            <h2>5. Implement the Operations of Circular Queue in an Integer Array (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    int MAX_QUEUE_SIZE = 10; // Maximum queue size
+                    int* circularQueue;
+                    int front = -1;
+                    int rear = -1;
+                    
+                    // Function to check if the queue is empty
+                    int isEmpty() {
+                        return (front == -1 && rear == -1);
+                    }
+                    
+                    // Function to check if the queue is full
+                    int isFull() {
+                        return ((rear + 1) % MAX_QUEUE_SIZE) == front;
+                    }
+                    
+                    // Function to insert an element into the circular queue
+                    void insert(int item) {
+                        if (isFull()) {
+                            printf("Queue is full. Cannot insert.\n");
+                        } else {
+                            if (isEmpty()) {
+                                front = rear = 0;
+                            } else {
+                                rear = (rear + 1) % MAX_QUEUE_SIZE;
+                            }
+                            circularQueue[rear] = item;
+                            printf("Inserted: %d\n", item);
+                        }
+                    }
+                    
+                    // Function to delete an element from the circular queue
+                    int delete() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot delete.\n");
+                            return -1;
+                        } else {
+                            int item = circularQueue[front];
+                            if (front == rear) {
+                                front = rear = -1;
+                            } else {
+                                front = (front + 1) % MAX_QUEUE_SIZE;
+                            }
+                            return item;
+                        }
+                    }
+                    
+                    // Function to peek at the front element of the circular queue
+                    int peek() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot peek.\n");
+                            return -1;
+                        } else {
+                            return circularQueue[front];
+                        }
+                    }
+                    
+                    int main() {
+                        circularQueue = (int*)malloc(MAX_QUEUE_SIZE * sizeof(int));
+                    
+                        int choice, item;
+                    
+                        while (1) {
+                            printf("\nCircular Queue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Is Full\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter element to insert: ");
+                                    scanf("%d", &item);
+                                    insert(item);
+                                    break;
+                                case 2:
+                                    item = delete();
+                                    if (item != -1) {
+                                        printf("Deleted: %d\n", item);
+                                    }
+                                    break;
+                                case 3:
+                                    item = peek();
+                                    if (item != -1) {
+                                        printf("Front element: %d\n", item);
+                                    }
+                                    break;
+                                case 4:
+                                    printf(isEmpty() ? "Queue is empty.\n" : "Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    printf(isFull() ? "Queue is full.\n" : "Queue is not full.\n");
+                                    break;
+                                case 6:
+                                    free(circularQueue);
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        free(circularQueue);
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 3
+                Inserted: 3
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 4
+                Inserted: 4
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 3
+                Front element: 3
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 4
+                Queue is not empty.
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 5
+                Queue is not full.
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 6
+                
+            </code></pre>
+        </section>
+        <section id="6">
+            <h2>6.  Implement the Operations of Circular Queue in an String Array (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    #include <string.h>
+                    
+                    int MAX_QUEUE_SIZE = 10; // Maximum queue size
+                    char** circularQueue;
+                    int front = -1;
+                    int rear = -1;
+                    
+                    // Function to check if the queue is empty
+                    int isEmpty() {
+                        return (front == -1 && rear == -1);
+                    }
+                    
+                    // Function to check if the queue is full
+                    int isFull() {
+                        return ((rear + 1) % MAX_QUEUE_SIZE) == front;
+                    }
+                    
+                    // Function to insert a string into the circular queue
+                    void insert(const char* item) {
+                        if (isFull()) {
+                            printf("Queue is full. Cannot insert.\n");
+                        } else {
+                            if (isEmpty()) {
+                                front = rear = 0;
+                            } else {
+                                rear = (rear + 1) % MAX_QUEUE_SIZE;
+                            }
+                            circularQueue[rear] = (char*)malloc(strlen(item) + 1); // +1 for null-terminator
+                            if (circularQueue[rear] == NULL) {
+                                printf("Memory allocation error. Cannot insert the element.\n");
+                                exit(1);
+                            }
+                            strcpy(circularQueue[rear], item);
+                            printf("Inserted: %s\n", item);
+                        }
+                    }
+                    
+                    // Function to delete a string from the circular queue
+                    char* delete() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot delete.\n");
+                            return NULL;
+                        } else {
+                            char* item = circularQueue[front];
+                            if (front == rear) {
+                                front = rear = -1;
+                            } else {
+                                front = (front + 1) % MAX_QUEUE_SIZE;
+                            }
+                            return item;
+                        }
+                    }
+                    
+                    // Function to peek at the front element of the circular queue
+                    char* peek() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot peek.\n");
+                            return NULL;
+                        } else {
+                            return circularQueue[front];
+                        }
+                    }
+                    
+                    int main() {
+                        circularQueue = (char**)malloc(MAX_QUEUE_SIZE * sizeof(char*));
+                    
+                        int choice;
+                        char item[50];
+                    
+                        while (1) {
+                            printf("\nCircular Queue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Is Full\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter string to insert: ");
+                                    scanf("%s", item);
+                                    insert(item);
+                                    break;
+                                case 2:
+                                    char* deletedItem = delete();
+                                    if (deletedItem != NULL) {
+                                        printf("Deleted: %s\n", deletedItem);
+                                        free(deletedItem);
+                                    }
+                                    break;
+                                case 3:
+                                    char* peekedItem = peek();
+                                    if (peekedItem != NULL) {
+                                        printf("Front element: %s\n", peekedItem);
+                                    }
+                                    break;
+                                case 4:
+                                    printf(isEmpty() ? "Queue is empty.\n" : "Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    printf(isFull() ? "Queue is full.\n" : "Queue is not full.\n");
+                                    break;
+                                case 6:
+                                    for (int i = 0; i < MAX_QUEUE_SIZE; i++) {
+                                        if (circularQueue[i] != NULL) {
+                                            free(circularQueue[i]);
+                                        }
+                                    }
+                                    free(circularQueue);
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter string to insert: P
+                Inserted: P
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter string to insert: R
+                Inserted: R
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 3
+                Front element: P
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 4
+                Queue is not empty.
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 5
+                Queue is not full.
+                
+                Circular Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 6
+                
+            </code></pre>
+        </section>
+        <section id="7">
+            <h2>7. </h2>Implement the Operations of Priority Queue in an Integer Array (Insert, Delete, Peek, Isempty, Isfull)
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    int MAX_QUEUE_SIZE = 10; // Maximum queue size
+                    int* priorityQueue;
+                    int rear = -1;
+                    
+                    // Function to check if the priority queue is empty
+                    int isEmpty() {
+                        return rear == -1;
+                    }
+                    
+                    // Function to check if the priority queue is full
+                    int isFull() {
+                        return rear == MAX_QUEUE_SIZE - 1;
+                    }
+                    
+                    // Function to insert an element into the priority queue
+                    void insert(int item) {
+                        if (isFull()) {
+                            printf("Queue is full. Cannot insert.\n");
+                        } else {
+                            int i;
+                            for (i = rear; i >= 0; i--) {
+                                if (item > priorityQueue[i]) {
+                                    priorityQueue[i + 1] = priorityQueue[i];
+                                } else {
+                                    break;
+                                }
+                            }
+                            priorityQueue[i + 1] = item;
+                            rear++;
+                            printf("Inserted: %d\n", item);
+                        }
+                    }
+                    
+                    // Function to delete the element with the highest priority
+                    int delete() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot delete.\n");
+                            return -1;
+                        } else {
+                            int item = priorityQueue[rear];
+                            rear--;
+                            return item;
+                        }
+                    }
+                    
+                    // Function to peek at the highest-priority element
+                    int peek() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot peek.\n");
+                            return -1;
+                        } else {
+                            return priorityQueue[rear];
+                        }
+                    }
+                    
+                    int main() {
+                        priorityQueue = (int*)malloc(MAX_QUEUE_SIZE * sizeof(int));
+                    
+                        int choice, item;
+                    
+                        while (1) {
+                            printf("\nPriority Queue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Is Full\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter element to insert: ");
+                                    scanf("%d", &item);
+                                    insert(item);
+                                    break;
+                                case 2:
+                                    item = delete();
+                                    if (item != -1) {
+                                        printf("Deleted: %d\n", item);
+                                    }
+                                    break;
+                                case 3:
+                                    item = peek();
+                                    if (item != -1) {
+                                        printf("Highest-priority element: %d\n", item);
+                                    }
+                                    break;
+                                case 4:
+                                    printf(isEmpty() ? "Queue is empty.\n" : "Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    printf(isFull() ? "Queue is full.\n" : "Queue is not full.\n");
+                                    break;
+                                case 6:
+                                    free(priorityQueue);
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        free(priorityQueue);
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 7
+                Inserted: 7
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 8
+                Inserted: 8
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 3
+                Highest-priority element: 7
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 6
+                
+            </code></pre>
+        </section>
+        <section id="8">
+            <h2>8.  Implement the Operations of Priority Queue in an String Array (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    int MAX_QUEUE_SIZE = 10; // Maximum queue size
+                    int* priorityQueue;
+                    int rear = -1;
+                    
+                    // Function to check if the priority queue is empty
+                    int isEmpty() {
+                        return rear == -1;
+                    }
+                    
+                    // Function to check if the priority queue is full
+                    int isFull() {
+                        return rear == MAX_QUEUE_SIZE - 1;
+                    }
+                    
+                    // Function to insert an element into the priority queue
+                    void insert(int item) {
+                        if (isFull()) {
+                            printf("Queue is full. Cannot insert.\n");
+                        } else {
+                            int i;
+                            for (i = rear; i >= 0; i--) {
+                                if (item > priorityQueue[i]) {
+                                    priorityQueue[i + 1] = priorityQueue[i];
+                                } else {
+                                    break;
+                                }
+                            }
+                            priorityQueue[i + 1] = item;
+                            rear++;
+                            printf("Inserted: %d\n", item);
+                        }
+                    }
+                    
+                    // Function to delete the element with the highest priority
+                    int delete() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot delete.\n");
+                            return -1;
+                        } else {
+                            int item = priorityQueue[rear];
+                            rear--;
+                            return item;
+                        }
+                    }
+                    
+                    // Function to peek at the highest-priority element
+                    int peek() {
+                        if (isEmpty()) {
+                            printf("Queue is empty. Cannot peek.\n");
+                            return -1;
+                        } else {
+                            return priorityQueue[rear];
+                        }
+                    }
+                    
+                    int main() {
+                        priorityQueue = (int*)malloc(MAX_QUEUE_SIZE * sizeof(int));
+                    
+                        int choice, item;
+                    
+                        while (1) {
+                            printf("\nPriority Queue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Is Full\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter element to insert: ");
+                                    scanf("%d", &item);
+                                    insert(item);
+                                    break;
+                                case 2:
+                                    item = delete();
+                                    if (item != -1) {
+                                        printf("Deleted: %d\n", item);
+                                    }
+                                    break;
+                                case 3:
+                                    item = peek();
+                                    if (item != -1) {
+                                        printf("Highest-priority element: %d\n", item);
+                                    }
+                                    break;
+                                case 4:
+                                    printf(isEmpty() ? "Queue is empty.\n" : "Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    printf(isFull() ? "Queue is full.\n" : "Queue is not full.\n");
+                                    break;
+                                case 6:
+                                    free(priorityQueue);
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        free(priorityQueue);
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peekx
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 5
+                Inserted: 5
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 8
+                Inserted: 8
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 3
+                Highest-priority element: 5
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 4
+                Queue is not empty.
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 6
+                
+            </code></pre>
+        </section>
+        <section id="9">
+            <h2>9. Implement the Operations of Double Ended Queue in an Integer Array (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    int MAX_QUEUE_SIZE = 10; // Maximum deque size
+                    int* deque;
+                    int front = -1;
+                    int rear = -1;
+                    
+                    // Function to check if the deque is empty
+                    int isEmpty() {
+                        return front == -1;
+                    }
+                    
+                    // Function to check if the deque is full
+                    int isFull() {
+                        return (front == 0 && rear == MAX_QUEUE_SIZE - 1) || (front == rear + 1);
+                    }
+                    
+                    // Function to insert an element at the front of the deque
+                    void insertFront(int item) {
+                        if (isFull()) {
+                            printf("Deque is full. Cannot insert at the front.\n");
+                        } else {
+                            if (front == -1) {
+                                front = rear = 0;
+                            } else if (front == 0) {
+                                front = MAX_QUEUE_SIZE - 1;
+                            } else {
+                                front -= 1;
+                            }
+                            deque[front] = item;
+                            printf("Inserted at the front: %d\n", item);
+                        }
+                    }
+                    
+                    // Function to insert an element at the rear of the deque
+                    void insertRear(int item) {
+                        if (isFull()) {
+                            printf("Deque is full. Cannot insert at the rear.\n");
+                        } else {
+                            if (front == -1) {
+                                front = rear = 0;
+                            } else if (rear == MAX_QUEUE_SIZE - 1) {
+                                rear = 0;
+                            } else {
+                                rear += 1;
+                            }
+                            deque[rear] = item;
+                            printf("Inserted at the rear: %d\n", item);
+                        }
+                    }
+                    
+                    // Function to delete an element from the front of the deque
+                    int deleteFront() {
+                        if (isEmpty()) {
+                            printf("Deque is empty. Cannot delete from the front.\n");
+                            return -1;
+                        } else {
+                            int item = deque[front];
+                            if (front == rear) {
+                                front = rear = -1;
+                            } else if (front == MAX_QUEUE_SIZE - 1) {
+                                front = 0;
+                            } else {
+                                front += 1;
+                            }
+                            return item;
+                        }
+                    }
+                    
+                    // Function to delete an element from the rear of the deque
+                    int deleteRear() {
+                        if (isEmpty()) {
+                            printf("Deque is empty. Cannot delete from the rear.\n");
+                            return -1;
+                        } else {
+                            int item = deque[rear];
+                            if (front == rear) {
+                                front = rear = -1;
+                            } else if (rear == 0) {
+                                rear = MAX_QUEUE_SIZE - 1;
+                            } else {
+                                rear -= 1;
+                            }
+                            return item;
+                        }
+                    }
+                    
+                    // Function to peek at the front element of the deque
+                    int peekFront() {
+                        if (isEmpty()) {
+                            printf("Deque is empty. Cannot peek at the front.\n");
+                            return -1;
+                        } else {
+                            return deque[front];
+                        }
+                    }
+                    
+                    // Function to peek at the rear element of the deque
+                    int peekRear() {
+                        if (isEmpty()) {
+                            printf("Deque is empty. Cannot peek at the rear.\n");
+                            return -1;
+                        } else {
+                            return deque[rear];
+                        }
+                    }
+                    
+                    int main() {
+                        deque = (int*)malloc(MAX_QUEUE_SIZE * sizeof(int));
+                    
+                        int choice, item;
+                    
+                        while (1) {
+                            printf("\nDouble Ended Queue (Deque) Operations:\n");
+                            printf("1. Insert at Front\n");
+                            printf("2. Insert at Rear\n");
+                            printf("3. Delete from Front\n");
+                            printf("4. Delete from Rear\n");
+                            printf("5. Peek at Front\n");
+                            printf("6. Peek at Rear\n");
+                            printf("7. Is Empty\n");
+                            printf("8. Is Full\n");
+                            printf("9. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter element to insert at the front: ");
+                                    scanf("%d", &item);
+                                    insertFront(item);
+                                    break;
+                                case 2:
+                                    printf("Enter element to insert at the rear: ");
+                                    scanf("%d", &item);
+                                    insertRear(item);
+                                    break;
+                                case 3:
+                                    item = deleteFront();
+                                    if (item != -1) {
+                                        printf("Deleted from the front: %d\n", item);
+                                    }
+                                    break;
+                                case 4:
+                                    item = deleteRear();
+                                    if (item != -1) {
+                                        printf("Deleted from the rear: %d\n", item);
+                                    }
+                                    break;
+                                case 5:
+                                    item = peekFront();
+                                    if (item != -1) {
+                                        printf("Front element: %d\n", item);
+                                    }
+                                    break;
+                                case 6:
+                                    item = peekRear();
+                                    if (item != -1) {
+                                        printf("Rear element: %d\n", item);
+                                    }
+                                    break;
+                                case 7:
+                                    printf(isEmpty() ? "Deque is empty.\n" : "Deque is not empty.\n");
+                                    break;
+                                case 8:
+                                    printf(isFull() ? "Deque is full.\n" : "Deque is not full.\n");
+                                    break;
+                                case 9:
+                                    free(deque);
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        free(deque);
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 1
+                Enter element to insert at the front: 11
+                Inserted at the front: 11
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 2
+                Enter element to insert at the rear: 22
+                Inserted at the rear: 22
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 1
+                Enter element to insert at the front: 15
+                Inserted at the front: 15
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 5
+                Front element: 15
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 6
+                Rear element: 22
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 8
+                Deque is not full.
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 9
+                
+            </code></pre>
+        </section>
+        <section id="10">
+            <h2>10.  Implement the Operations of Double Ended Queue in an String Array (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    #include <string.h>
+                    
+                    int MAX_QUEUE_SIZE = 10; // Maximum deque size
+                    char** deque;
+                    int front = -1;
+                    int rear = -1;
+                    
+                    // Function to check if the deque is empty
+                    int isEmpty() {
+                        return front == -1;
+                    }
+                    
+                    // Function to check if the deque is full
+                    int isFull() {
+                        return (front == 0 && rear == MAX_QUEUE_SIZE - 1) || (front == rear + 1);
+                    }
+                    
+                    // Function to insert a string at the front of the deque
+                    void insertFront(char* item) {
+                        if (isFull()) {
+                            printf("Deque is full. Cannot insert at the front.\n");
+                        } else {
+                            if (front == -1) {
+                                front = rear = 0;
+                            } else if (front == 0) {
+                                front = MAX_QUEUE_SIZE - 1;
+                            } else {
+                                front -= 1;
+                            }
+                            deque[front] = strdup(item); // Duplicate the input string
+                            printf("Inserted at the front: %s\n", item);
+                        }
+                    }
+                    
+                    // Function to insert a string at the rear of the deque
+                    void insertRear(char* item) {
+                        if (isFull()) {
+                            printf("Deque is full. Cannot insert at the rear.\n");
+                        } else {
+                            if (front == -1) {
+                                front = rear = 0;
+                            } else if (rear == MAX_QUEUE_SIZE - 1) {
+                                rear = 0;
+                            } else {
+                                rear += 1;
+                            }
+                            deque[rear] = strdup(item); // Duplicate the input string
+                            printf("Inserted at the rear: %s\n", item);
+                        }
+                    }
+                    
+                    // Function to delete a string from the front of the deque
+                    char* deleteFront() {
+                        if (isEmpty()) {
+                            printf("Deque is empty. Cannot delete from the front.\n");
+                            return NULL;
+                        } else {
+                            char* item = deque[front];
+                            if (front == rear) {
+                                front = rear = -1;
+                            } else if (front == MAX_QUEUE_SIZE - 1) {
+                                front = 0;
+                            } else {
+                                front += 1;
+                            }
+                            return item;
+                        }
+                    }
+                    
+                    // Function to delete a string from the rear of the deque
+                    char* deleteRear() {
+                        if (isEmpty()) {
+                            printf("Deque is empty. Cannot delete from the rear.\n");
+                            return NULL;
+                        } else {
+                            char* item = deque[rear];
+                            if (front == rear) {
+                                front = rear = -1;
+                            } else if (rear == 0) {
+                                rear = MAX_QUEUE_SIZE - 1;
+                            } else {
+                                rear -= 1;
+                            }
+                            return item;
+                        }
+                    }
+                    
+                    // Function to peek at the front string of the deque
+                    char* peekFront() {
+                        if (isEmpty()) {
+                            printf("Deque is empty. Cannot peek at the front.\n");
+                            return NULL;
+                        } else {
+                            return deque[front];
+                        }
+                    }
+                    
+                    // Function to peek at the rear string of the deque
+                    char* peekRear() {
+                        if (isEmpty()) {
+                            printf("Deque is empty. Cannot peek at the rear.\n");
+                            return NULL;
+                        } else {
+                            return deque[rear];
+                        }
+                    }
+                    
+                    int main() {
+                        deque = (char**)malloc(MAX_QUEUE_SIZE * sizeof(char*));
+                    
+                        int choice;
+                        char input[100];
+                    
+                        while (1) {
+                            printf("\nDouble Ended Queue (Deque) Operations:\n");
+                            printf("1. Insert at Front\n");
+                            printf("2. Insert at Rear\n");
+                            printf("3. Delete from Front\n");
+                            printf("4. Delete from Rear\n");
+                            printf("5. Peek at Front\n");
+                            printf("6. Peek at Rear\n");
+                            printf("7. Is Empty\n");
+                            printf("8. Is Full\n");
+                            printf("9. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter a string to insert at the front: ");
+                                    scanf("%s", input);
+                                    insertFront(input);
+                                    break;
+                                case 2:
+                                    printf("Enter a string to insert at the rear: ");
+                                    scanf("%s", input);
+                                    insertRear(input);
+                                    break;
+                                case 3:
+                                    char* deletedFront = deleteFront();
+                                    if (deletedFront != NULL) {
+                                        printf("Deleted from the front: %s\n", deletedFront);
+                                        free(deletedFront);
+                                    }
+                                    break;
+                                case 4:
+                                    char* deletedRear = deleteRear();
+                                    if (deletedRear != NULL) {
+                                        printf("Deleted from the rear: %s\n", deletedRear);
+                                        free(deletedRear);
+                                    }
+                                    break;
+                                case 5:
+                                    char* frontStr = peekFront();
+                                    if (frontStr != NULL) {
+                                        printf("Front element: %s\n", frontStr);
+                                    }
+                                    break;
+                                case 6:
+                                    char* rearStr = peekRear();
+                                    if (rearStr != NULL) {
+                                        printf("Rear element: %s\n", rearStr);
+                                    }
+                                    break;
+                                case 7:
+                                    printf(isEmpty() ? "Deque is empty.\n" : "Deque is not empty.\n");
+                                    break;
+                                case 8:
+                                    printf(isFull() ? "Deque is full.\n" : "Deque is not full.\n");
+                                    break;
+                                case 9:
+                                    for (int i = front; i <= rear; i++) {
+                                        free(deque[i]);
+                                    }
+                                    free(deque);
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        for (int i = front; i <= rear; i++) {
+                            free(deque[i]);
+                        }
+                        free(deque);
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 1
+                Enter a string to insert at the front: S
+                Inserted at the front: S
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 2
+                Enter a string to insert at the rear: G
+                Inserted at the rear: G
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 1
+                Enter a string to insert at the front: R
+                Inserted at the front: R
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 4
+                Deleted from the rear: G
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 6
+                Rear element: S
+                
+                Double Ended Queue (Deque) Operations:
+                1. Insert at Front
+                2. Insert at Rear
+                3. Delete from Front
+                4. Delete from Rear
+                5. Peek at Front
+                6. Peek at Rear
+                7. Is Empty
+                8. Is Full
+                9. Exit
+                Enter your choice: 9
+                
+            </code></pre>
+        </section>
+        <section id="11">
+            <h2>11. Implement the Operations of Priority Queue Dynamically of Integers (Insert, Delete, Peek, Isempty, Isfull) </h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    struct PriorityQueue {
+                        int capacity;
+                        int size;
+                        int* elements;
+                    };
+                    
+                    struct PriorityQueue* createPriorityQueue(int capacity) {
+                        struct PriorityQueue* pq = (struct PriorityQueue*)malloc(sizeof(struct PriorityQueue));
+                        if (pq == NULL) {
+                            printf("Memory allocation failed.\n");
+                            exit(1);
+                        }
+                        pq->capacity = capacity;
+                        pq->size = 0;
+                        pq->elements = (int*)malloc(sizeof(int) * capacity);
+                        return pq;
+                    }
+                    
+                    // Helper function to swap two integers
+                    void swap(int* a, int* b) {
+                        int temp = *a;
+                        *a = *b;
+                        *b = temp;
+                    }
+                    
+                    // Function to check if the priority queue is empty
+                    int isEmpty(struct PriorityQueue* pq) {
+                        return pq->size == 0;
+                    }
+                    
+                    // Function to check if the priority queue is full
+                    int isFull(struct PriorityQueue* pq) {
+                        return pq->size == pq->capacity;
+                    }
+                    
+                    // Function to insert an element into the priority queue
+                    void insert(struct PriorityQueue* pq, int item) {
+                        if (isFull(pq)) {
+                            printf("Priority Queue is full. Cannot insert.\n");
+                            return;
+                        }
+                        pq->size++;
+                        int i = pq->size - 1;
+                        pq->elements[i] = item;
+                    
+                        // Fix the max heap property
+                        while (i > 0 && pq->elements[(i - 1) / 2] < pq->elements[i]) {
+                            swap(&pq->elements[i], &pq->elements[(i - 1) / 2]);
+                            i = (i - 1) / 2;
+                        }
+                    
+                        printf("Inserted: %d\n", item);
+                    }
+                    
+                    // Function to delete the element with the highest priority
+                    int delete(struct PriorityQueue* pq) {
+                        if (isEmpty(pq)) {
+                            printf("Priority Queue is empty. Cannot delete.\n");
+                            return -1;
+                        }
+                        if (pq->size == 1) {
+                            pq->size--;
+                            return pq->elements[0];
+                        }
+                        int root = pq->elements[0];
+                        pq->elements[0] = pq->elements[pq->size - 1];
+                        pq->size--;
+                    
+                        // Fix the max heap property
+                        int i = 0;
+                        while (1) {
+                            int left = 2 * i + 1;
+                            int right = 2 * i + 2;
+                            int largest = i;
+                    
+                            if (left < pq->size && pq->elements[left] > pq->elements[largest])
+                                largest = left;
+                    
+                            if (right < pq->size && pq->elements[right] > pq->elements[largest])
+                                largest = right;
+                    
+                            if (largest != i) {
+                                swap(&pq->elements[i], &pq->elements[largest]);
+                                i = largest;
+                            } else {
+                                break;
+                            }
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to peek at the highest-priority element
+                    int peek(struct PriorityQueue* pq) {
+                        if (isEmpty(pq)) {
+                            printf("Priority Queue is empty. Cannot peek.\n");
+                            return -1;
+                        }
+                        return pq->elements[0];
+                    }
+                    
+                    int main() {
+                        int capacity;
+                        printf("Enter the capacity of the Priority Queue: ");
+                        scanf("%d", &capacity);
+                    
+                        struct PriorityQueue* pq = createPriorityQueue(capacity);
+                    
+                        int choice, item;
+                    
+                        while (1) {
+                            printf("\nPriority Queue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Is Full\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter element to insert: ");
+                                    scanf("%d", &item);
+                                    insert(pq, item);
+                                    break;
+                                case 2:
+                                    item = delete(pq);
+                                    if (item != -1) {
+                                        printf("Deleted: %d\n", item);
+                                    }
+                                    break;
+                                case 3:
+                                    item = peek(pq);
+                                    if (item != -1) {
+                                        printf("Highest-priority element: %d\n", item);
+                                    }
+                                    break;
+                                case 4:
+                                    printf(isEmpty(pq) ? "Priority Queue is empty.\n" : "Priority Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    printf(isFull(pq) ? "Priority Queue is full.\n" : "Priority Queue is not full.\n");
+                                    break;
+                                case 6:
+                                    free(pq->elements);
+                                    free(pq);
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        free(pq->elements);
+                        free(pq);
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the capacity of the Priority Queue: 4
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 20
+                Inserted: 20
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 22
+                Inserted: 22
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 15
+                Inserted: 15
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter element to insert: 10
+                Inserted: 10
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 3
+                Highest-priority element: 22
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 5
+                Priority Queue is full.
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 4
+                Priority Queue is not empty.
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 6
+                
+            </code></pre>
+        </section>
+        <section id="12">
+            <h2>12. Implement the Operations of Priority Queue Dynamically of String (Insert, Delete, Peek, Isempty, Isfull)</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    #include <string.h>
+                    
+                    struct PriorityQueue {
+                        int capacity;
+                        int size;
+                        char** elements;
+                    };
+                    
+                    struct PriorityQueue* createPriorityQueue(int capacity) {
+                        struct PriorityQueue* pq = (struct PriorityQueue*)malloc(sizeof(struct PriorityQueue));
+                        if (pq == NULL) {
+                            printf("Memory allocation failed.\n");
+                            exit(1);
+                        }
+                        pq->capacity = capacity;
+                        pq->size = 0;
+                        pq->elements = (char**)malloc(sizeof(char*) * capacity);
+                        return pq;
+                    }
+                    
+                    // Function to check if the priority queue is empty
+                    int isEmpty(struct PriorityQueue* pq) {
+                        return pq->size == 0;
+                    }
+                    
+                    // Function to check if the priority queue is full
+                    int isFull(struct PriorityQueue* pq) {
+                        return pq->size == pq->capacity;
+                    }
+                    
+                    // Function to insert a string into the priority queue
+                    void insert(struct PriorityQueue* pq, char* item) {
+                        if (isFull(pq)) {
+                            printf("Priority Queue is full. Cannot insert.\n");
+                            return;
+                        }
+                        pq->elements[pq->size] = strdup(item); // Duplicate the input string
+                        pq->size++;
+                    
+                        // Build a max heap
+                        int current = pq->size - 1;
+                        int parent = (current - 1) / 2;
+                        while (current > 0 && strcmp(pq->elements[current], pq->elements[parent]) > 0) {
+                            char* temp = pq->elements[current];
+                            pq->elements[current] = pq->elements[parent];
+                            pq->elements[parent] = temp;
+                    
+                            current = parent;
+                            parent = (current - 1) / 2;
+                        }
+                    
+                        printf("Inserted: %s\n", item);
+                    }
+                    
+                    // Function to delete the element with the highest priority
+                    char* delete(struct PriorityQueue* pq) {
+                        if (isEmpty(pq)) {
+                            printf("Priority Queue is empty. Cannot delete.\n");
+                            return NULL;
+                        }
+                        char* root = pq->elements[0];
+                        pq->size--;
+                    
+                        // Move the last element to the root
+                        pq->elements[0] = pq->elements[pq->size];
+                        // Free the last element to avoid memory leaks
+                        free(pq->elements[pq->size]);
+                    
+                        // Build the max heap again
+                        int current = 0;
+                        while (1) {
+                            int left = 2 * current + 1;
+                            int right = 2 * current + 2;
+                            int largest = current;
+                    
+                            if (left < pq->size && strcmp(pq->elements[left], pq->elements[largest]) > 0) {
+                                largest = left;
+                            }
+                    
+                            if (right < pq->size && strcmp(pq->elements[right], pq->elements[largest]) > 0) {
+                                largest = right;
+                            }
+                    
+                            if (largest != current) {
+                                char* temp = pq->elements[current];
+                                pq->elements[current] = pq->elements[largest];
+                                pq->elements[largest] = temp;
+                    
+                                current = largest;
+                            } else {
+                                break;
+                            }
+                        }
+                    
+                        return root;
+                    }
+                    
+                    // Function to peek at the highest-priority element
+                    char* peek(struct PriorityQueue* pq) {
+                        if (isEmpty(pq)) {
+                            printf("Priority Queue is empty. Cannot peek.\n");
+                            return NULL;
+                        }
+                        return pq->elements[0];
+                    }
+                    
+                    int main() {
+                        int capacity;
+                        printf("Enter the capacity of the Priority Queue: ");
+                        scanf("%d", &capacity);
+                    
+                        struct PriorityQueue* pq = createPriorityQueue(capacity);
+                    
+                        int choice;
+                        char input[100];
+                    
+                        while (1) {
+                            printf("\nPriority Queue Operations:\n");
+                            printf("1. Insert\n");
+                            printf("2. Delete\n");
+                            printf("3. Peek\n");
+                            printf("4. Is Empty\n");
+                            printf("5. Is Full\n");
+                            printf("6. Exit\n");
+                            printf("Enter your choice: ");
+                            scanf("%d", &choice);
+                    
+                            switch (choice) {
+                                case 1:
+                                    printf("Enter a string to insert: ");
+                                    scanf("%s", input);
+                                    insert(pq, input);
+                                    break;
+                                case 2:
+                                    char* deleted = delete(pq);
+                                    if (deleted != NULL) {
+                                        printf("Deleted: %s\n", deleted);
+                                        free(deleted); // Free the deleted element to avoid memory leaks
+                                    }
+                                    break;
+                                case 3:
+                                    char* front = peek(pq);
+                                    if (front != NULL) {
+                                        printf("Highest-priority element: %s\n", front);
+                                    }
+                                    break;
+                                case 4:
+                                    printf(isEmpty(pq) ? "Priority Queue is empty.\n" : "Priority Queue is not empty.\n");
+                                    break;
+                                case 5:
+                                    printf(isFull(pq) ? "Priority Queue is full.\n" : "Priority Queue is not full.\n");
+                                    break;
+                                case 6:
+                                    for (int i = 0; i < pq->size; i++) {
+                                        free(pq->elements[i]); // Free all remaining elements
+                                    }
+                                    free(pq->elements);
+                                    free(pq);
+                                    return 0;
+                                default:
+                                    printf("Invalid choice. Please enter a valid option.\n");
+                            }
+                        }
+                    
+                        for (int i = 0; i < pq->size; i++) {
+                            free(pq->elements[i]); // Free all remaining elements
+                        }
+                        free(pq->elements);
+                        free(pq);
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the capacity of the Priority Queue: 4
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter a string to insert: Cat
+                Inserted: Cat
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter a string to insert: Dog
+                Inserted: Dog
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter a string to insert: Pig
+                Inserted: Pig
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 1
+                Enter a string to insert: Hen
+                Inserted: Hen
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 4
+                Priority Queue is not empty.
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 5
+                Priority Queue is full.
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 3
+                Highest-priority element: Pig
+                
+                Priority Queue Operations:
+                1. Insert
+                2. Delete
+                3. Peek
+                4. Is Empty
+                5. Is Full
+                6. Exit
+                Enter your choice: 6
+                
+            </code></pre>
+        </section>
+        </div>
+    </body>
+</html>

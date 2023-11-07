@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2D Arrays</title>
+    <style>
+        /* Add CSS styles for code formatting and page layout */
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="content">
+        <h1>2D Arrays</h1>
+        <section id="1">
+            <h2>1. Sum of matrix</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int rows, cols;
+                
+                        printf("Enter the number of rows: ");
+                        scanf("%d", &rows);
+                        printf("Enter the number of columns: ");
+                        scanf("%d", &cols);
+                    
+                        
+                        int matrix[rows][cols];
+                    
+                        
+                        printf("Enter the elements of the matrix:\n");
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                scanf("%d", &matrix[i][j]);
+                            }
+                        }
+                    
+                        
+                        int sum = 0;
+                        for (int i = 0; i < rows; i++) {
+                            for (int j = 0; j < cols; j++) {
+                                sum += matrix[i][j];
+                            }
+                        }
+                    
+                        
+                        printf("Sum of elements in the matrix: %d\n", sum);
+                    
+                        return 0;
+                    }
+                    
+
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the number of rows: 3
+                Enter the number of columns: 2
+                Enter the elements of the matrix:
+                2
+                3
+                4
+                5
+                6
+                7
+                Sum of elements in the matrix: 27
+            </code></pre>
+        </section>
+        <section id="2">
+            <h2>2. Multiplication matrix</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int A[3][2] = {{1, 2}, {3, 4}, {5, 6}};
+                        int B[2][3] = {{7, 8, 9}, {10, 11, 12}};
+                        int C[3][3]; // The result matrix
+                    
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                C[i][j] = 0; // Initialize the element in the result matrix to 0
+                                for (int k = 0; k < 2; k++) {
+                                    C[i][j] += A[i][k] * B[k][j];
+                                }
+                            }
+                        }
+                    
+                    
+                        printf("Resultant Matrix:\n");
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                printf("%d\t", C[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Resultant Matrix:
+                27	30	33	
+                61	68	75	
+                95	106	117	
+                
+            </code></pre>
+            </section>
+            <section id="3">
+            <h2>3. Transpose of a matrix</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int matrix[3][3] = {
+                            {1, 2, 3},
+                            {4, 5, 6},
+                            {7, 8, 9}
+                        };
+                        int transpose[3][3];
+                    
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                transpose[i][j] = matrix[j][i];
+                            }
+                        }
+                    
+                        printf("Original Matrix:\n");
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                printf("%d\t", matrix[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        printf("\nTranspose Matrix:\n");
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                printf("%d\t", transpose[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original Matrix:
+                1	2	3	
+                4	5	6	
+                7	8	9	
+                
+                Transpose Matrix:
+                1	4	7	
+                2	5	8	
+                3	6	9	
+                
+            </code></pre>
+        </section>
+        <section id="4">
+            <h2>4. Subtraction of a matrix</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int matrix1[3][3] = {
+                            {1, 2, 3},
+                            {4, 5, 6},
+                            {7, 8, 9}
+                        };
+                    
+                        int matrix2[3][3] = {
+                            {9, 8, 7},
+                            {6, 5, 4},
+                            {3, 2, 1}
+                        };
+                    
+                        int result[3][3];
+                    
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                result[i][j] = matrix1[i][j] - matrix2[i][j];
+                            }
+                        }
+                    
+                        printf("Result Matrix (matrix1 - matrix2):\n");
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                printf("%d\t", result[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Result Matrix (matrix1 - matrix2):
+                -8	-6	-4	
+                -2	0	2	
+                4	6	8              
+            </code></pre>
+        </section>
+        <section id="5">
+            <h2>5. Scalar mutiplication of a matrix</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int main() {
+                        int matrix[3][3] = {
+                            {1, 2, 3},
+                            {4, 5, 6},
+                            {7, 8, 9}
+                        };
+                        int scalar = 2; // The scalar value for multiplication
+                        int result[3][3];
+                    
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                result[i][j] = scalar * matrix[i][j];
+                            }
+                        }
+                    
+                        printf("Result Matrix (Scalar Multiplication):\n");
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                printf("%d\t", result[i][j]);
+                            }
+                            printf("\n");
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Result Matrix (Scalar Multiplication):
+                2	4	6	
+                8	10	12	
+                14	16	18
+            </code></pre>
+        </section>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Searching and Sorting</title>
+    <style>
+        /* Add CSS styles for code formatting and page layout */
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Searching and Sorting Algorithms</h1>
+    
+        <section id="1">
+            <h2>Linear Search through Itration</h2>
+            <pre><code>
+#include<stdio.h>
+
+int linearSearch(int arr[], int size, int target) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == target) {
+            return i; // Element found, return its index
+        }
+    }
+    return -1; // Element not found
+}
+
+int main() {
+    int arr[] = {10, 23, 5, 15, 30, 50};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int target = 15;
+
+    int result = linearSearch(arr, size, target);
+
+    if (result != -1) {
+        printf("Element %d found at index %d\n", target, result);
+    } else {
+        printf("Element %d not found in the array\n", target);
+    }
+
+    return 0;
+}
+            </code></pre>
+            <h3>Output</h3>
+    <pre><code>  
+        Element 15 found at index 3
+    </code></pre>
+        </section>
+    
+        <section id="2">
+            <h2>Linear search through Recursion</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    int linearSearchRecursive(int arr[], int target, int index, int size) {
+                        if (index == size) {
+                            return -1; // Element not found
+                        }
+                        if (arr[index] == target) {
+                            return index; // Element found, return its index
+                        }
+                        return linearSearchRecursive(arr, target, index + 1, size);
+                    }
+                    
+                    int main() {
+                        int arr[] = {10, 23, 5, 15, 30, 50};
+                        int size = sizeof(arr) / sizeof(arr[0]);
+                        int target = 15;
+                    
+                        int result = linearSearchRecursive(arr, target, 0, size);
+                    
+                        if (result != -1) {
+                            printf("Element %d found at index %d\n", target, result);
+                        } else {
+                            printf("Element %d not found in the array\n", target);
+                        }
+                    
+                        return 0;
+                    }
+            </code></pre>
+            <h3>Output</h3>
+                  <pre><code>
+                    Element 15 found at index 3
+                  </code></pre>
+        </section>
+        <section id="3">
+            <h2>Binary search through Itration</h2>
+            <pre><code>
+                // C program to implement iterative Binary Search
+#include <stdio.h>
+
+// An iterative binary search function.
+int binarySearch(int arr[], int l, int r, int x)
+{
+	while (l <= r) {
+		int m = l + (r - l) / 2;
+
+		// Check if x is present at mid
+		if (arr[m] == x)
+			return m;
+
+		// If x greater, ignore left half
+		if (arr[m] < x)
+			l = m + 1;
+
+		// If x is smaller, ignore right half
+		else
+			r = m - 1;
+	}
+
+	// If we reach here, then element was not present
+	return -1;
+}
+
+// Driver code
+int main(void)
+{
+	int arr[] = { 2, 3, 4, 10, 40 };
+	int n = sizeof(arr) / sizeof(arr[0]);
+	int x = 10;
+	int result = binarySearch(arr, 0, n - 1, x);
+	(result == -1) ? printf("Element is not present"
+							" in array")
+				: printf("Element is present at "
+							"index %d",
+							result);
+	return 0;
+}
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code>
+                Element is present at index 3
+            </code></pre>
+        </section>
+        <section id="4">
+            <h2>Binary search through Recursion</h2>
+            <pre><code>
+                // C program to implement recursive Binary Search
+                #include <stdio.h>
+                
+                // A recursive binary search function. It returns
+                // location of x in given array arr[l..r] is present,
+                // otherwise -1
+                int binarySearch(int arr[], int l, int r, int x)
+                {
+                    if (r >= l) {
+                        int mid = l + (r - l) / 2;
+                
+                        // If the element is present at the middle
+                        // itself
+                        if (arr[mid] == x)
+                            return mid;
+                
+                        // If element is smaller than mid, then
+                        // it can only be present in left subarray
+                        if (arr[mid] > x)
+                            return binarySearch(arr, l, mid - 1, x);
+                
+                        // Else the element can only be present
+                        // in right subarray
+                        return binarySearch(arr, mid + 1, r, x);
+                    }
+                
+                    // We reach here when element is not
+                    // present in array
+                    return -1;
+                }
+                
+                // Driver code
+                int main()
+                {
+                    int arr[] = { 2, 3, 4, 10, 40 };
+                    int n = sizeof(arr) / sizeof(arr[0]);
+                    int x = 10;
+                    int result = binarySearch(arr, 0, n - 1, x);
+                    (result == -1)
+                        ? printf("Element is not present in array")
+                        : printf("Element is present at index %d", result);
+                    return 0;
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Element is present at index 3
+            </code></pre>
+        </section>
+        <section id="5">
+            <h2>Selection sorting through Iteration</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    void selectionSort(int arr[], int size) {
+                        int i, j, minIndex, temp;
+                    
+                        for (i = 0; i < size - 1; i++) {
+                            minIndex = i;
+                            for (j = i + 1; j < size; j++) {
+                                if (arr[j] < arr[minIndex]) {
+                                    minIndex = j;
+                                }
+                            }
+                    
+                            // Swap the found minimum element with the element at index i
+                            temp = arr[i];
+                            arr[i] = arr[minIndex];
+                            arr[minIndex] = temp;
+                        }
+                    }
+                    
+                    int main() {
+                        int arr[] = {64, 25, 12, 22, 11};
+                        int size = sizeof(arr) / sizeof(arr[0]);
+                        
+                        printf("Original array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                        
+                        selectionSort(arr, size);
+                    
+                        printf("\nSorted array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original array: 64 25 12 22 11 
+                Sorted array: 11 12 22 25 64 
+            </code></pre>
+        </section>
+        <section id="6">
+            <h2>Bubble sorting through Iteration</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    void bubbleSort(int arr[], int size) {
+                        for (int i = 0; i < size - 1; i++) {
+                            for (int j = 0; j < size - i - 1; j++) {
+                                if (arr[j] > arr[j + 1]) {
+                                    // Swap arr[j] and arr[j+1]
+                                    int temp = arr[j];
+                                    arr[j] = arr[j + 1];
+                                    arr[j + 1] = temp;
+                                }
+                            }
+                        }
+                    }
+                    
+                    int main() {
+                        int arr[] = {64, 34, 25, 12, 22, 11, 90};
+                        int size = sizeof(arr) / sizeof(arr[0]);
+                    
+                        printf("Original array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        bubbleSort(arr, size);
+                    
+                        printf("\nSorted array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original array: 64 34 25 12 22 11 90 
+                Sorted array: 11 12 22 25 34 64 90 
+            </code></pre>
+        </section>
+        <section id="7">
+            <h2>Insertion sorting through Iteration</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    void insertionSort(int arr[], int size) {
+                        int i, key, j;
+                        for (i = 1; i < size; i++) {
+                            key = arr[i];
+                            j = i - 1;
+                    
+                            // Move elements of arr[0..i-1] that are greater than key
+                            // to one position ahead of their current position
+                            while (j >= 0 && arr[j] > key) {
+                                arr[j + 1] = arr[j];
+                                j = j - 1;
+                            }
+                            arr[j + 1] = key;
+                        }
+                    }
+                    
+                    int main() {
+                        int arr[] = {46, 34, 25, 12, 22, 11, 20};
+                        int size = sizeof(arr) / sizeof(arr[0]);
+                    
+                        printf("Original array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        insertionSort(arr, size);
+                    
+                        printf("\nSorted array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original array: 46 34 25 12 22 11 20 
+                Sorted array: 11 12 20 22 25 34 46
+            </code></pre>
+        </section>
+        <section id="8">
+            <h2>Merge sort through Iteration</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <stdlib.h>
+                    
+                    // Function to merge two subarrays: arr[left...mid] and arr[mid+1...right]
+                    void merge(int arr[], int left, int mid, int right) {
+                        int n1 = mid - left + 1;
+                        int n2 = right - mid;
+                    
+                        // Create temporary arrays to hold the subarrays
+                        int *leftArray = (int *)malloc(n1 * sizeof(int));
+                        int *rightArray = (int *)malloc(n2 * sizeof(int));
+                    
+                        for (int i = 0; i < n1; i++)
+                            leftArray[i] = arr[left + i];
+                        for (int j = 0; j < n2; j++)
+                            rightArray[j] = arr[mid + 1 + j];
+                    
+                        // Merge the two subarrays into the original array
+                        int i = 0, j = 0, k = left;
+                        while (i < n1 && j < n2) {
+                            if (leftArray[i] <= rightArray[j]) {
+                                arr[k] = leftArray[i];
+                                i++;
+                            } else {
+                                arr[k] = rightArray[j];
+                                j++;
+                            }
+                            k++;
+                        }
+                    
+                        while (i < n1) {
+                            arr[k] = leftArray[i];
+                            i++;
+                            k++;
+                        }
+                    
+                        while (j < n2) {
+                            arr[k] = rightArray[j];
+                            j++;
+                            k++;
+                        }
+                    
+                        free(leftArray);
+                        free(rightArray);
+                    }
+                    
+                    // Iterative merge sort
+                    void mergeSort(int arr[], int size) {
+                        int currentSize;
+                        int leftStart;
+                    
+                        // Start from 1 element subarrays and double the size in each iteration
+                        for (currentSize = 1; currentSize <= size - 1; currentSize = 2 * currentSize) {
+                            // Pick starting point of different subarrays of current size
+                            for (leftStart = 0; leftStart < size - 1; leftStart += 2 * currentSize) {
+                                int mid = leftStart + currentSize - 1;
+                                int rightEnd = leftStart + 2 * currentSize - 1;
+                    
+                                // If right end is greater than the last element, adjust it
+                                if (rightEnd > size - 1)
+                                    rightEnd = size - 1;
+                    
+                                // Merge the subarrays
+                                merge(arr, leftStart, mid, rightEnd);
+                            }
+                        }
+                    }
+                    
+                    int main() {
+                        int arr[] = {38, 27, 43, 3, 9, 82, 10};
+                        int size = sizeof(arr) / sizeof(arr[0]);
+                    
+                        printf("Original array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        mergeSort(arr, size);
+                    
+                        printf("\nSorted array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original array: 38 27 43 3 9 82 10 
+                Sorted array: 3 9 10 27 38 43 82 
+            </code></pre>
+        </section>
+        <section id="9">
+            <h2>Merge sort through Recursion</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    // Function to merge two sorted subarrays arr[left...mid] and arr[mid+1...right]
+                    void merge(int arr[], int left, int mid, int right) {
+                        int n1 = mid - left + 1;
+                        int n2 = right - mid + 1;
+                    
+                        // Create temporary arrays for the left and right subarrays
+                        int leftArray[n1];
+                        int rightArray[n2];
+                    
+                        for (int i = 0; i < n1; i++) {
+                            leftArray[i] = arr[left + i];
+                        }
+                        for (int i = 0; i < n2; i++) {
+                            rightArray[i] = arr[mid + 1 + i];
+                        }
+                    
+                        // Merge the two subarrays back into the original array
+                        int i = 0, j = 0, k = left;
+                        while (i < n1 && j < n2) {
+                            if (leftArray[i] <= rightArray[j]) {
+                                arr[k] = leftArray[i];
+                                i++;
+                            } else {
+                                arr[k] = rightArray[j];
+                                j++;
+                            }
+                            k++;
+                        }
+                    
+                        // Copy any remaining elements of the left and right subarrays
+                        while (i < n1) {
+                            arr[k] = leftArray[i];
+                            i++;
+                            k++;
+                        }
+                        while (j < n2) {
+                            arr[k] = rightArray[j];
+                            j++;
+                            k++;
+                        }
+                    }
+                    
+                    // Recursive merge sort function
+                    void mergeSort(int arr[], int left, int right) {
+                        if (left < right) {
+                            int mid = left + (right - left) / 2;
+                    
+                            // Recursively sort the left and right halves
+                            mergeSort(arr, left, mid);
+                            mergeSort(arr, mid + 1, right);
+                    
+                            // Merge the sorted subarrays
+                            merge(arr, left, mid, right);
+                        }
+                    }
+                    
+                    int main() {
+                        int arr[] = {38, 27, 43, 3, 9, 82, 10};
+                        int size = sizeof(arr) / sizeof(arr[0]);
+                    
+                        printf("Original array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        mergeSort(arr, 0, size - 1);
+                    
+                        printf("\nSorted array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original array: 38 27 43 3 9 82 10 
+                Sorted array: 3 9 10 0 27 38 43 
+            </code></pre>
+        </section>
+        <section id="10">
+            <h2>Quick sort through Iteration</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    void swap(int* a, int* b) {
+                        int t = *a;
+                        *a = *b;
+                        *b = t;
+                    }
+                    
+                    void iterativeQuickSort(int arr[], int size) {
+                        int stack[size];
+                        int top = -1;
+                    
+                        stack[++top] = 0;
+                        stack[++top] = size - 1;
+                    
+                        while (top >= 0) {
+                            int high = stack[top--];
+                            int low = stack[top--];
+                    
+                            int pivot = arr[high];
+                            int i = (low - 1);
+                    
+                            for (int j = low; j <= high - 1; j++) {
+                                if (arr[j] <= pivot) {
+                                    i++;
+                                    swap(&arr[i], &arr[j]);
+                                }
+                            }
+                    
+                            swap(&arr[i + 1], &arr[high]);
+                            int partitionIndex = i + 1;
+                    
+                            if (partitionIndex - 1 > low) {
+                                stack[++top] = low;
+                                stack[++top] = partitionIndex - 1;
+                            }
+                    
+                            if (partitionIndex + 1 < high) {
+                                stack[++top] = partitionIndex + 1;
+                                stack[++top] = high;
+                            }
+                        }
+                    }
+                    
+                    int main() {
+                        int arr[] = {38, 27, 43, 3, 9, 82, 10};
+                        int size = sizeof(arr) / sizeof(arr[0]);
+                    
+                        printf("Original array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        iterativeQuickSort(arr, size);
+                    
+                        printf("\nSorted array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original array: 38 27 43 3 9 82 10 
+                Sorted array: 3 9 10 27 38 43 82
+            </code></pre>
+        </section>
+        <section id="11">
+            <h2>Quick sort through Recursion</h2>
+            <pre><code>
+                #include <stdio.h>
+
+                    void swap(int arr[], int a, int b) {
+                        int temp = arr[a];
+                        arr[a] = arr[b];
+                        arr[b] = temp;
+                    }
+                    
+                    int partition(int arr[], int low, int high) {
+                        int pivot = arr[high];
+                        int i = low - 1;
+                    
+                        for (int j = low; j < high; j++) {
+                            if (arr[j] < pivot) {
+                                i++;
+                                swap(arr, i, j);
+                            }
+                        }
+                    
+                        swap(arr, i + 1, high);
+                        return i + 1;
+                    }
+                    
+                    void quickSort(int arr[], int low, int high) {
+                        if (low < high) {
+                            int pi = partition(arr, low, high);
+                    
+                            quickSort(arr, low, pi - 1);
+                            quickSort(arr, pi + 1, high);
+                        }
+                    }
+                    
+                    int main() {
+                        int arr[] = {38, 27, 43, 3, 9, 82, 10};
+                        int size = sizeof(arr) / sizeof(arr[0]);
+                    
+                        printf("Original array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        int stack[size];  // Stack for tracking low and high
+                        int top = -1;
+                    
+                        // Initialize the stack with initial low and high
+                        stack[++top] = 0;
+                        stack[++top] = size - 1;
+                    
+                        while (top >= 0) {
+                            // Pop low and high from the stack
+                            int high = stack[top--];
+                            int low = stack[top--];
+                    
+                            int pi = partition(arr, low, high);
+                    
+                            if (pi - 1 > low) {
+                                stack[++top] = low;
+                                stack[++top] = pi - 1;
+                            }
+                    
+                            if (pi + 1 < high) {
+                                stack[++top] = pi + 1;
+                                stack[++top] = high;
+                            }
+                        }
+                    
+                        printf("\nSorted array: ");
+                        for (int i = 0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original array: 38 27 43 3 9 82 10 
+                Sorted array: 3 9 10 27 38 43 82 
+            </code></pre>
+        </section>
+        <section id="12">
+            <h2>Show all the complexities of the searching algorithms with exact time taken</h2>
+            <pre><code>
+
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+
+            </code></pre>
+        </section>
+        <section id="13">
+            <h2>Show all the complexities of the sorting algorithms with exact time taken</h2>
+            <pre><code>
+
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+
+            </code></pre>
+        </section>
+        <section id="14">
+            <h2>Sort the string using quick sort</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <string.h>
+                    
+                    void swap(char *a, char *b) {
+                        char temp = *a;
+                        *a = *b;
+                        *b = temp;
+                    }
+                    
+                    void quickSort(char str[], int low, int high) {
+                        if (low < high) {
+                            char pivot = str[high];
+                            int i = low - 1;
+                    
+                            for (int j = low; j <= high - 1; j++) {
+                                if (str[j] < pivot) {
+                                    i++;
+                                    swap(&str[i], &str[j]);
+                                }
+                            }
+                    
+                            swap(&str[i + 1], &str[high]);
+                            int pi = i + 1;
+                    
+                            quickSort(str, low, pi - 1);
+                            quickSort(str, pi + 1, high);
+                        }
+                    }
+                    
+                    int main() {
+                        char str[] = "quicksortexample";
+                        int size = strlen(str);
+                    
+                        printf("Original string: %s\n", str);
+                    
+                        quickSort(str, 0, size - 1);
+                    
+                        printf("Sorted string: %s\n", str);
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Original string: quicksortexample
+                Sorted string: aceeiklmopqrstux
+            </code></pre>
+        </section>
+        <section id="15">
+            <h2>Sort the string using merge sort</h2>
+            <pre><code>
+                // C program for Merge Sort 
+                #include <stdio.h> 
+                #include <stdlib.h> 
+                
+                // Merges two subarrays of arr[]. 
+                // First subarray is arr[l..m] 
+                // Second subarray is arr[m+1..r] 
+                void merge(int arr[], int l, int m, int r) 
+                { 
+                    int i, j, k; 
+                    int n1 = m - l + 1; 
+                    int n2 = r - m; 
+                
+                    // Create temp arrays 
+                    int L[n1], R[n2]; 
+                
+                    // Copy data to temp arrays 
+                    // L[] and R[] 
+                    for (i = 0; i < n1; i++) 
+                        L[i] = arr[l + i]; 
+                    for (j = 0; j < n2; j++) 
+                        R[j] = arr[m + 1 + j]; 
+                
+                    // Merge the temp arrays back 
+                    // into arr[l..r] 
+                    // Initial index of first subarray 
+                    i = 0; 
+                
+                    // Initial index of second subarray 
+                    j = 0; 
+                
+                    // Initial index of merged subarray 
+                    k = l; 
+                    while (i < n1 && j < n2) { 
+                        if (L[i] <= R[j]) { 
+                            arr[k] = L[i]; 
+                            i++; 
+                        } 
+                        else { 
+                            arr[k] = R[j]; 
+                            j++; 
+                        } 
+                        k++; 
+                    } 
+                
+                    // Copy the remaining elements 
+                    // of L[], if there are any 
+                    while (i < n1) { 
+                        arr[k] = L[i]; 
+                        i++; 
+                        k++; 
+                    } 
+                
+                    // Copy the remaining elements of 
+                    // R[], if there are any 
+                    while (j < n2) { 
+                        arr[k] = R[j]; 
+                        j++; 
+                        k++; 
+                    } 
+                } 
+                
+                // l is for left index and r is 
+                // right index of the sub-array 
+                // of arr to be sorted 
+                void mergeSort(int arr[], int l, int r) 
+                { 
+                    if (l < r) { 
+                        // Same as (l+r)/2, but avoids 
+                        // overflow for large l and h 
+                        int m = l + (r - l) / 2; 
+                
+                        // Sort first and second halves 
+                        mergeSort(arr, l, m); 
+                        mergeSort(arr, m + 1, r); 
+                
+                        merge(arr, l, m, r); 
+                    } 
+                } 
+                
+                // UTILITY FUNCTIONS 
+                // Function to print an array 
+                void printArray(int A[], int size) 
+                { 
+                    int i; 
+                    for (i = 0; i < size; i++) 
+                        printf("%d ", A[i]); 
+                    printf("\n"); 
+                } 
+                
+                // Driver code 
+                int main() 
+                { 
+                    int arr[] = { 12, 11, 13, 5, 6, 7 }; 
+                    int arr_size = sizeof(arr) / sizeof(arr[0]); 
+                
+                    printf("Given array is \n"); 
+                    printArray(arr, arr_size); 
+                
+                    mergeSort(arr, 0, arr_size - 1); 
+                
+                    printf("\nSorted array is \n"); 
+                    printArray(arr, arr_size); 
+                    return 0; 
+                }
+                
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Given array is 
+                12 11 13 5 6 7 
+                
+                Sorted array is 
+                5 6 7 11 12 13 
+                
+            </code></pre>
+        </section>
+    </div>
+</body>
+</html>

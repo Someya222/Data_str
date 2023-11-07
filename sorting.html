@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sorting</title>
+    <style>
+        /* Add CSS styles for code formatting and page layout */
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="content">
+        <h1>Sorting</h1>
+        <section id="1">
+            <h2>1.  Enter a Integer Array From the User and Perform Selection Sort Algorithm 
+                Through Iteration. Also Calculate the Worst and Best Complexity With Exact
+                 Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <time.h>
+                    
+                    
+                    void selectionSort(int arr[], int n) {
+                        for (int i = 0; i < n - 1; i++) {
+                            int min_index = i;
+                            for (int j = i + 1; j < n; j++) {
+                                if (arr[j] < arr[min_index]) {
+                                    min_index = j;
+                                }
+                            }
+                            if (min_index != i) {
+                                int temp = arr[i];
+                                arr[i] = arr[min_index];
+                                arr[min_index] = temp;
+                            }
+                        }
+                    }
+                    
+                    int main() {
+                        int n;
+                    
+                        printf("Enter the size of the array: ");
+                        scanf("%d", &n);
+                    
+                        int arr[n];
+                    
+                        printf("Enter %d elements into the array: ", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &arr[i]);
+                        }
+                    
+                        clock_t start, end;
+                        double cpu_time_used;
+                    
+                        start = clock(); // Start the timer
+                    
+                        selectionSort(arr, n); // Perform selection sort on the array
+                    
+                        end = clock(); // End the timer
+                    
+                        cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", cpu_time_used);
+                    
+                        printf("Best case complexity: O(n^2)\n");
+                        printf("Worst case complexity: O(n^2)\n");
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the size of the array: 5
+                Enter 5 elements into the array: 5 6 7 8 9
+                Sorted array: 5 6 7 8 9 
+                Time taken: 0.000001 seconds
+                Best case complexity: O(n^2)
+                Worst case complexity: O(n^2)
+                
+            </code></pre>
+        </section>
+        <section id="2">
+            <h2>2. Enter a Integer Array From the User and Perform Selection Sort
+                 Algorithm Through Recursion. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <time.h>
+                    
+                   
+                    void selectionSortRecursive(int arr[], int n, int index) {
+                        if (index >= n - 1) {
+                            return;
+                        }
+                    
+                        int min_index = index;
+                        for (int j = index + 1; j < n; j++) {
+                            if (arr[j] < arr[min_index]) {
+                                min_index = j;
+                            }
+                        }
+                        if (min_index != index) {
+                            int temp = arr[index];
+                            arr[index] = arr[min_index];
+                            arr[min_index] = temp;
+                        }
+                    
+                        selectionSortRecursive(arr, n, index + 1);
+                    }
+                    
+                    int main() {
+                        int n;
+                    
+                        printf("Enter the size of the array: ");
+                        scanf("%d", &n);
+                    
+                        int arr[n];
+                    
+                        printf("Enter %d elements into the array: ", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &arr[i]);
+                        }
+                    
+                        clock_t start, end;
+                        double cpu_time_used;
+                    
+                        start = clock(); // Start the timer
+                    
+                        selectionSortRecursive(arr, n, 0); // Perform selection sort using recursion
+                    
+                        end = clock(); // End the timer
+                    
+                        cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", cpu_time_used);
+                    
+                        printf("Best case complexity: O(n^2)\n");
+                        printf("Worst case complexity: O(n^2)\n");
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the size of the array: 4
+                Enter 4 elements into the array: 7 8 9 0
+                Sorted array: 0 7 8 9 
+                Time taken: 0.000002 seconds
+                Best case complexity: O(n^2)
+                Worst case complexity: O(n^2)
+                
+            </code></pre>
+        </section>
+        <section id="3">
+            <h2>3. Enter a Integer Array From the User and Perform Bubble 
+                Sort Algorithm Through Iteration. Also Calculate the Worst and Best Complexity With Exact Time</h2>
+            <pre><code>
+                #include <stdio.h>
+                    #include <time.h>
+                    
+                   
+                    void bubbleSort(int arr[], int n) {
+                        for (int i = 0; i < n - 1; i++) {
+                            int swapped = 0; // Variable to track if any swap occurred in the current pass
+                            for (int j = 0; j < n - i - 1; j++) {
+                                if (arr[j] > arr[j + 1]) {
+                                    // Swap if the current element is greater than the next element
+                                    int temp = arr[j];
+                                    arr[j] = arr[j + 1];
+                                    arr[j + 1] = temp;
+                                    swapped = 1;
+                                }
+                            }
+                            if (swapped == 0) {
+                                // If no swap occurred in a pass, the array is already sorted
+                                break;
+                            }
+                        }
+                    }
+                    
+                    int main() {
+                        int n;
+                    
+                        printf("Enter the size of the array: ");
+                        scanf("%d", &n);
+                    
+                        int arr[n];
+                    
+                        printf("Enter %d elements into the array: ", n);
+                        for (int i = 0; i < n; i++) {
+                            scanf("%d", &arr[i]);
+                        }
+                    
+                        clock_t start, end;
+                        double cpu_time_used;
+                    
+                        start = clock(); // Start the timer
+                    
+                        bubbleSort(arr, n); // Perform bubble sort on the array
+                    
+                        end = clock(); // End the timer
+                    
+                        cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+                    
+                        printf("Sorted array: ");
+                        for (int i = 0; i < n; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                        printf("\n");
+                    
+                        printf("Time taken: %f seconds\n", cpu_time_used);
+                    
+                        printf("Best case complexity: O(n)\n");
+                        printf("Worst case complexity: O(n^2)\n");
+                    
+                        return 0;
+                    }
+                    
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+                Enter the size of the array: 5
+                Enter 5 elements into the array: 22 55 33 11 44
+                Sorted array: 11 22 33 44 55 
+                Time taken: 0.000002 seconds
+                Best case complexity: O(n)
+                Worst case complexity: O(n^2)
+                
+            </code></pre>
+        </section>
+        <section id="4">
+            <h2>4. Enter a Integer Array From the User and Perform Bubble Sort
+                 Algorithm Through Recursion. Also Calculate the Worst and Best Complexity With Exact Time.</h2>
+            <pre><code>
+
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+
+            </code></pre>
+        </section>
+        <section id="">
+            <h2></h2>
+            <pre><code>
+
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+
+            </code></pre>
+        </section>
+        <section id="">
+            <h2></h2>
+            <pre><code>
+
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+
+            </code></pre>
+        </section>
+        <section id="">
+            <h2></h2>
+            <pre><code>
+
+            </code></pre>
+            <h3>Output</h3>
+            <pre><code> 
+
+            </code></pre>
+        </section>
+
+        </div>
+    </body>
+</html>
